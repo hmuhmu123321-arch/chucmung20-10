@@ -1,76 +1,395 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chúc mừng 20-10 Mẹ yêu ❤️</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chúc mừng 20-10 - Gửi mẹ</title>
+<link rel="icon" href="data:,">
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-family: 'Segoe UI', sans-serif;
-  color: #fff;
-  overflow: hidden;
-}
-h1 {
-  font-size: 2.5em;
-  text-align: center;
-  margin-bottom: 10px;
-}
-p {
-  font-size: 1.3em;
-  max-width: 600px;
-  text-align: center;
-  line-height: 1.6;
-}
-.heart {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: pink;
-  transform: rotate(45deg);
-  animation: float 5s linear infinite;
-}
-.heart::before,
-.heart::after {
-  content: '';
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: pink;
-  border-radius: 50%;
-}
-.heart::before { top: -7px; left: 0; }
-.heart::after { left: 7px; top: 0; }
-@keyframes float {
-  0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-  100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
-}
+  :root{
+    --bg1: #fff0f4;
+    --bg2: #fff8f0;
+    --accent: #e91e63;
+    --muted: #6b6b6b;
+    --card: rgba(255,255,255,0.75);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family: "Inter", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(circle at 10% 20%, #fff0f4 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, #fff8f0 0%, transparent 20%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    overflow:hidden;
+    color:#222;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:980px;
+    border-radius:20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.80));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:24px;
+    padding:28px;
+    align-items:center;
+    position:relative;
+    overflow:visible;
+  }
+
+  /* Left text panel */
+  .left{
+    padding:30px;
+  }
+  h1{
+    margin:0 0 10px 0;
+    font-size:36px;
+    color:var(--accent);
+    letter-spacing:0.6px;
+  }
+  .subtitle{
+    margin:0 0 20px 0;
+    font-size:18px;
+    color:var(--muted);
+  }
+  .message{
+    background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    padding:18px;
+    border-radius:12px;
+    font-size:18px;
+    line-height:1.6;
+    color:#333;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  }
+
+  .cta-row{
+    margin-top:18px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .btn{
+    background: linear-gradient(180deg,var(--accent), #c31656);
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow: 0 8px 20px rgba(233,30,99,0.18);
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-ghost{
+    background:transparent;
+    border:1px solid rgba(0,0,0,0.06);
+    color:#333;
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+  }
+
+  /* Right card with image */
+  .card-right{
+    position:relative;
+    height:420px;
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter: saturate(1.05) contrast(1.02);
+  }
+  .photo-fallback{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(135deg,#ffdfe8, #fff1d9);
+    color:#9a2b58;
+    font-weight:700;
+    font-size:28px;
+  }
+  .overlay-text{
+    position:absolute;
+    left:18px;
+    bottom:18px;
+    right:18px;
+    color:white;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    font-weight:700;
+    font-size:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  /* Hearts/flowers floating (canvas-like) */
+  .floating {
+    pointer-events: none;
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+  }
+  .small-note{
+    margin-top:14px;
+    color:#666;
+    font-size:13px;
+  }
+
+  /* animations for text reveal */
+  .reveal {
+    overflow:hidden;
+  }
+  .reveal span{
+    display:inline-block;
+    transform: translateY(110%);
+    animation: jump 0.7s forwards;
+  }
+  @keyframes jump {
+    to { transform: translateY(0%); }
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .wrap{grid-template-columns:1fr; padding:18px}
+    .card-right{height:320px}
+  }
+
+  /* decorative bottom hearts */
+  .bottom-strip{
+    position: absolute;
+    left:0;right:0;bottom:-40px;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    opacity:0.12;
+    transform:translateY(0);
+  }
 </style>
 </head>
 <body>
-  <h1>💐 Chúc mừng ngày 20-10 💐</h1>
-  <p>
-    Mẹ ơi, nhân ngày Phụ nữ Việt Nam,<br>
-    con chúc mẹ thật nhiều sức khỏe, luôn tươi cười, hạnh phúc và bình an.<br>
-    Cảm ơn mẹ vì đã luôn yêu thương và hy sinh cho con! ❤️
-  </p>
-  <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 2) + 's';
-      heart.style.background = 'hsl(' + Math.random()*360 + ',70%,80%)';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+  <div class="wrap" id="wrap">
+    <div class="left">
+      <h1 id="title">💐 Chúc mừng Ngày Phụ nữ Việt Nam 20/10</h1>
+      <div class="subtitle">Gửi mẹ yêu của con — người phụ nữ tuyệt vời nhất</div>
+
+      <div class="message" id="msg">
+        <!-- Message lines will be animated -->
+        <div class="reveal" id="line1"></div>
+        <div style="height:10px"></div>
+        <div class="reveal" id="line2"></div>
+        <div style="height:14px"></div>
+        <div class="small-note">Bấm <strong>Play</strong> để nghe nhạc nền. Chạm màn hình để mở trải nghiệm đầy đủ.</div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn" id="btnPlay">▶️ Play nhạc & mở hiệu ứng</button>
+        <button class="btn-ghost" id="btnDownload">Tải thiệp (PNG)</button>
+        <a class="btn-ghost" id="ytLink" href="https://www.youtube.com/results?search_query=mẹ+yêu+phương+uyên" target="_blank" style="text-decoration:none">Nghe trên YouTube</a>
+      </div>
+    </div>
+
+    <div class="card-right">
+      <!-- If user uploads mom.jpg in same folder, it will show; otherwise fallback -->
+      <img src="mom.jpg" alt="Ảnh mẹ" onerror="this.style.display='none';document.getElementById('fallback').style.display='flex';" class="photo" id="momPhoto">
+      <div id="fallback" class="photo-fallback" style="display:none;">
+        Mẹ yêu ❤️
+      </div>
+
+      <div class="overlay-text" id="overlayText" style="display:none">
+        <div id="overlayLine">Con yêu mẹ nhiều lắm</div>
+      </div>
+    </div>
+
+    <div class="floating" id="floating"></div>
+    <div class="bottom-strip" id="bottomStrip"></div>
+  </div>
+
+  <!-- Hidden audio: if you put bg-music.mp3 in same folder, it'll be used.
+       Otherwise user can click YouTube link. -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="bg-music.mp3" type="audio/mp3">
+    <!-- fallback: no audio file -->
+  </audio>
+
+<script>
+/* ====== Config text (EDIT HERE if you want) ====== */
+const lines = [
+  "Mẹ ơi, nhân ngày 20/10, con chúc mẹ luôn mạnh khỏe, hạnh phúc và tràn đầy nụ cười.",
+  "Cảm ơn mẹ đã yêu thương, chăm sóc và hy sinh cho con từng ngày.",
+  "Con yêu mẹ nhiều lắm ❤️"
+];
+const overlay = "Con yêu mẹ nhiều lắm ❤️";
+/* ================================================= */
+
+const line1 = document.getElementById('line1');
+const line2 = document.getElementById('line2');
+const overlayText = document.getElementById('overlayText');
+const overlayLine = document.getElementById('overlayLine');
+overlayLine.textContent = overlay;
+
+/* animate lines letter by letter */
+function animateText(el, text, delayBase=40){
+  el.innerHTML = '';
+  const words = text.split(' ');
+  // we'll animate per word or per letter for nicer effect
+  let delay = 0;
+  for(let i=0;i<text.length;i++){
+    const ch = text[i] === ' ' ? '\u00A0' : text[i];
+    const span = document.createElement('span');
+    span.textContent = ch;
+    span.style.animationDelay = (delay * delayBase/1000) + 's';
+    span.style.opacity = 0;
+    span.style.display = 'inline-block';
+    // animation to move up & fade in
+    span.style.transform = 'translateY(110%)';
+    span.style.transition = 'transform 0.45s cubic-bezier(.2,.9,.3,1), opacity 0.45s';
+    el.appendChild(span);
+    // schedule reveal
+    (function(s){
+      setTimeout(()=>{ s.style.transform='translateY(0)'; s.style.opacity=1; }, delay*delayBase);
+    })(span);
+    delay += 1;
+  }
+}
+
+function revealAll(){
+  animateText(line1, lines[0]);
+  setTimeout(()=> animateText(line2, lines.slice(1).join(' ')), 1200);
+  // show overlay on right
+  setTimeout(()=> overlayText.style.display='flex', 2000);
+}
+
+/* floating hearts/flowers */
+const floatRoot = document.getElementById('floating');
+function createFloating(){
+  const n = Math.random() > 0.6 ? '🌸' : '❤️';
+  const el = document.createElement('div');
+  el.textContent = n;
+  const size = Math.floor(14 + Math.random()*36);
+  el.style.position='absolute';
+  el.style.left = (Math.random()*110) + 'vw';
+  el.style.bottom = '-30px';
+  el.style.fontSize = size+'px';
+  el.style.opacity = 0.9;
+  el.style.transform = 'translateY(0) rotate('+ (Math.random()*40-20) +'deg)';
+  el.style.transition = 'transform 6s linear, bottom 6s linear, opacity 1s';
+  floatRoot.appendChild(el);
+  // animate
+  setTimeout(()=> {
+    el.style.bottom = (90 + Math.random()*120) + 'vh';
+    el.style.transform = 'translateY(-20px) rotate('+ (Math.random()*160-80) +'deg)';
+    el.style.opacity = 0.05;
+  }, 50);
+  // remove
+  setTimeout(()=> el.remove(), 6300);
+}
+
+/* tiny bottom strip hearts */
+const bottomStrip = document.getElementById('bottomStrip');
+function createStrip(){
+  bottomStrip.innerHTML = '';
+  for(let i=0;i<22;i++){
+    const s = document.createElement('div');
+    s.textContent = '❤';
+    s.style.fontSize = (8 + Math.random()*16) + 'px';
+    bottomStrip.appendChild(s);
+  }
+}
+
+/* Audio controls */
+const bgAudio = document.getElementById('bgAudio');
+const btnPlay = document.getElementById('btnPlay');
+const ytLink = document.getElementById('ytLink');
+
+btnPlay.addEventListener('click', async ()=>{
+  // try to play local mp3 if exists
+  let played = false;
+  try {
+    // if source exists and can play
+    const sources = bgAudio.getElementsByTagName('source');
+    if(sources.length && sources[0].src){
+      await bgAudio.play();
+      played = true;
     }
-    setInterval(createHeart, 200);
-  </script>
+  } catch(e){
+    played = false;
+  }
+  // Reveal text and start floating anyway
+  revealAll();
+  // start continuous floating
+  window._floatInterval = window.setInterval(createFloating, 250);
+  createStrip();
+
+  // If local audio not available, open youtube in new tab as fallback
+  if(!played){
+    // open youtube search result in new tab (or user can click the ytLink)
+    ytLink.click();
+  } else {
+    btnPlay.textContent = "⏸ Tạm dừng nhạc";
+    btnPlay.onclick = ()=> {
+      if(bgAudio.paused) { bgAudio.play(); btnPlay.textContent = "⏸ Tạm dừng nhạc"; }
+      else { bgAudio.pause(); btnPlay.textContent = "▶️ Bật nhạc"; }
+    }
+  }
+});
+
+/* Download PNG (screenshot of card) using html2canvas */
+async function downloadCardPNG(){
+  // minimal html2canvas loader
+  if(typeof html2canvas === 'undefined'){
+    const s = document.createElement('script');
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+    document.body.appendChild(s);
+    await new Promise(r=> s.onload = r);
+  }
+  const node = document.getElementById('wrap');
+  html2canvas(node, {useCORS:true, scale:2}).then(canvas=>{
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'thiệp-20-10.png';
+    a.click();
+  });
+}
+document.getElementById('btnDownload').addEventListener('click', downloadCardPNG);
+
+/* small UX: when user taps anywhere first time, trigger reveal (for mobile autoplay rules) */
+let firstTap = false;
+document.addEventListener('click', function onFirst(e){
+  if(firstTap) return;
+  firstTap = true;
+  // try to autoplay muted (most browsers allow muted autoplay)
+  try { bgAudio.muted = true; bgAudio.play().then(()=>{ bgAudio.pause(); bgAudio.muted=false; }); } catch(e){}
+  // also reveal
+  revealAll();
+  // start floating slowly
+  window._floatInterval = window.setInterval(createFloating, 350);
+  createStrip();
+  // remove this listener
+  document.removeEventListener('click', onFirst);
+});
+
+/* small entrance animation */
+window.onload = ()=>{
+  // slight scale pop
+  document.getElementById('wrap').style.transform = 'translateY(0)';
+  // position overlay text hidden until reveal
+  overlayText.style.display = 'none';
+};
+</script>
 </body>
 </html>
